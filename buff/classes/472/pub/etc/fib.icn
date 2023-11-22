@@ -1,0 +1,17 @@
+# icon fib.icn
+
+procedure main()
+    every write(Fib(20))
+end
+
+procedure Fib(hi)
+    local i,j
+    i:=0
+    j:=1
+    while i<=hi do {
+	suspend i
+	i:=:j
+	j+:=i
+    }
+    fail
+end

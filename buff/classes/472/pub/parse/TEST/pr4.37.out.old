@@ -1,0 +1,85 @@
+ 0) S : A "a" A "b" ;
+ 1) S : B "b" B "a" ;
+ 2) A : ;
+ 3) B : ;
+
+FIRST("a")={"a"}
+FIRST("b")={"b"}
+FIRST(A)={^}
+FIRST(B)={^}
+FIRST(S)={^,"a","b"}
+
+FOLLOW(A)={"a","b"}
+FOLLOW(B)={"a","b"}
+FOLLOW(S)={$}
+
+Map2.put(): duplicate table entry (S,$,0/1)
+     "a" "b"   $
+A      2   2
+B      3   3
+S      0   1   0
+
+ (1) $ S              "a" "b" $    S : A "a" A "b" ;
+ (2) $ "b" A "a" A    "a" "b" $    A : ;
+ (3) $ "b" A "a"      "a" "b" $    
+ (4) $ "b" A          "b" $        A : ;
+ (5) $ "b"            "b" $        
+ (6) $                $            
+
+Map2.put(): duplicate table entry (0,"a",r2/r3)
+Map2.put(): duplicate table entry (0,"b",r2/r3)
+I0:
+    A : . ;
+    B : . ;
+    S : . A "a" A "b" ;
+    S : . B "b" B "a" ;
+    S' : . S ;
+
+I1:
+    S : A . "a" A "b" ;
+
+I2:
+    S : B . "b" B "a" ;
+
+I3:
+    S' : S . ;
+
+I4:
+    A : . ;
+    S : A "a" . A "b" ;
+
+I5:
+    B : . ;
+    S : B "b" . B "a" ;
+
+I6:
+    S : A "a" A . "b" ;
+
+I7:
+    S : B "b" B . "a" ;
+
+I8:
+    S : A "a" A "b" . ;
+
+I9:
+    S : B "b" B "a" . ;
+
+    "a" "b"   $   A   B   S
+  0  r2  r2       1   2   3
+  1  s4                    
+  2      s5                
+  3         acc            
+  4  r2  r2       6        
+  5  r3  r3           7    
+  6      s8                
+  7  s9                    
+  8          r0            
+  9          r1            
+
+ (1) $ 0                        "a" "b" $    reduce: A : ;
+ (2) $ 0 A 1                    "a" "b" $    shift: 4
+ (3) $ 0 A 1 "a" 4              "b" $        reduce: A : ;
+ (4) $ 0 A 1 "a" 4 A 6          "b" $        shift: 8
+ (5) $ 0 A 1 "a" 4 A 6 "b" 8    $            reduce: S : A "a" A "b" ;
+ (6) $ 0 S 3                    $            accept
+

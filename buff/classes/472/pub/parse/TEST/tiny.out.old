@@ -1,0 +1,40 @@
+ 0) S : "a" "b" ;
+ 1) S : "a" "c" ;
+
+FIRST("a")={"a"}
+FIRST("b")={"b"}
+FIRST("c")={"c"}
+FIRST(S)={"a"}
+
+FOLLOW(S)={$}
+
+I0:
+    S : . "a" "b" ;
+    S : . "a" "c" ;
+    S' : . S ;
+
+I1:
+    S : "a" . "b" ;
+    S : "a" . "c" ;
+
+I2:
+    S' : S . ;
+
+I3:
+    S : "a" "b" . ;
+
+I4:
+    S : "a" "c" . ;
+
+    "a" "b" "c"   $   S
+  0  s1               2
+  1      s3  s4        
+  2             acc    
+  3              r0    
+  4              r1    
+
+ (1) $ 0                "a" "b" $    shift: 1
+ (2) $ 0 "a" 1          "b" $        shift: 3
+ (3) $ 0 "a" 1 "b" 3    $            reduce: S : "a" "b" ;
+ (4) $ 0 S 2            $            accept
+

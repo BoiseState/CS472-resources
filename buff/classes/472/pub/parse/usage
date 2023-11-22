@@ -1,0 +1,23 @@
+wave$ java Main --grammar TEST/grammar.grammar -u
+--debug-parse <true/false> #print details during string parsing
+    default: "false"
+--debug-symbols <true/false> #print details during symbol analysis
+    default: "false"
+--grammar (-g) <file> #name of grammar file
+    default: "grammar"
+    value:   "TEST/grammar.grammar"
+--parse-ll <true/false> #parse using LL table
+    default: "false"
+--parse-lr <true/false> #parse using LR table
+    default: "true"
+--singles <string> #single-character tokens (space separated)
+    default: ": ; |"
+--string (-s) <file> #name of file containing string to parse
+    default: "string"
+--table-ll <true/false> #build LL table
+    default: "false"
+--table-lr <true/false> #build LR table
+    default: "true"
+--usage (-u) #show usage
+
+wave$ 

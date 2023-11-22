@@ -1,0 +1,21 @@
+ 87 Abstract Factory
+ 97 Builder
+107 Factory Method
+117 Prototype
+127 Singleton
+139 Adapter
+151 Bridge
+163 Composite
+175 Decorator
+185 Facade
+195 Flyweight
+207 Proxy
+223 Chain of Responsibility
+233 Command
+243 Interpreter
+257 Iterator
+273 Mediator
+283 Memento
+293 Observer
+305 State
+315 Strategy

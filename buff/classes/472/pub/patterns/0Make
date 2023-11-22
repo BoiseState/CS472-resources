@@ -1,0 +1,12 @@
+#!/bin/bash
+
+while read page name ; do
+    file=${name// }
+    tex=$file.tex
+    sed \
+	-e "s/@P@/$page/g" \
+	-e "s/@N@/$name/g" \
+	-e "s/@F@/$file/g" \
+	< 0TMPL.tex > $tex
+    pdflatex $tex
+done < 0Patterns.txt

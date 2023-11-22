@@ -1,0 +1,13 @@
+stmt        : "case" word "in" branches "esac" ;
+branches    : branch branches ;
+            | branch ;
+branch      : patterns ")" commands ";;" ;
+patterns    : pattern "|" patterns ;
+            | pattern ;
+commands    : command ";" commands ;
+            | command ;
+            | ;
+
+word    : "word" ;
+pattern : "pattern" ;
+command : "command" ;

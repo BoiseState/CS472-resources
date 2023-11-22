@@ -1,0 +1,39 @@
+Introduction
+    - scan/parse input file, producing parse tree
+    - walk parse tree, producing grammar
+    - process grammar, producing:
+        -- symbols
+        -- nonterminal symbols
+        -- terminal symbols
+        -- first: Symbol -> Terminals
+        -- follow: Symbol -> Terminals
+        -- LL parsing table: Nonterminal Terminal -> Rule
+        -- LR parsing table:
+            --- action: State Symbol -> Action
+            --- goto: State Symbol -> State
+    - use LL parsing table to parse input file
+    - use LR parsing table to parse input file
+
+Input file
+    - symbols, rules, grammar
+    - a grammar specifying grammars
+
+Main.java
+
+Args.java
+    - Singleton(127)
+
+ArgMap.java
+    - sort of an iterator
+
+Arg.java
+    - Command(233)
+
+File.java
+    - Java I/O is too complex
+    - Adapter(139)
+
+Lexer.java
+    - simple: whitespace-separated lexemes
+    - why not Iterator(257)?
+

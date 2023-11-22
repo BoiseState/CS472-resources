@@ -1,0 +1,16 @@
+Mark SoItems as they are processed, for efficiency.
+
+Should I use Builder(97) for building the parse tree or
+grammar? They use Builder(97) and Visitor(331) in the
+scanner/parser described in the Facade(185) pattern.
+
+    - Rather than Interpreter(243)?
+	-- Would the Director be Lexer?
+	-- Would the Builder be Node?
+	-- Would a ConcreteBuilder be NodeRoot?
+        -- No, because the parser should call the lexer.
+    - Rather than Visitor(331)?
+	-- Would the Director be Grammar?
+	-- Would the Builder be NodeVisitor?
+	-- Would a ConcreteBuilder be NodeToGrammarVisitor?
+        -- No, because the "input stream" is heterogeneous.

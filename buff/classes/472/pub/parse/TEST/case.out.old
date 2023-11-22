@@ -1,0 +1,175 @@
+ 0) stmt : "case" word "in" branches "esac" ;
+ 1) branches : branch branches ;
+ 2) branches : branch ;
+ 3) branch : patterns ")" commands ";;" ;
+ 4) patterns : pattern "|" patterns ;
+ 5) patterns : pattern ;
+ 6) commands : command ";" commands ;
+ 7) commands : command ;
+ 8) commands : ;
+ 9) word : "word" ;
+10) pattern : "pattern" ;
+11) command : "command" ;
+
+FIRST(")")={")"}
+FIRST(";")={";"}
+FIRST(";;")={";;"}
+FIRST("case")={"case"}
+FIRST("command")={"command"}
+FIRST("esac")={"esac"}
+FIRST("in")={"in"}
+FIRST("pattern")={"pattern"}
+FIRST("word")={"word"}
+FIRST("|")={"|"}
+FIRST(branch)={"pattern"}
+FIRST(branches)={"pattern"}
+FIRST(command)={"command"}
+FIRST(commands)={^,"command"}
+FIRST(pattern)={"pattern"}
+FIRST(patterns)={"pattern"}
+FIRST(stmt)={"case"}
+FIRST(word)={"word"}
+
+FOLLOW(branch)={"esac","pattern"}
+FOLLOW(branches)={"esac"}
+FOLLOW(command)={";",";;"}
+FOLLOW(commands)={";;"}
+FOLLOW(pattern)={")","|"}
+FOLLOW(patterns)={")"}
+FOLLOW(stmt)={$}
+FOLLOW(word)={"in"}
+
+I0:
+    stmt : . "case" word "in" branches "esac" ;
+    stmt' : . stmt ;
+
+I1:
+    stmt : "case" . word "in" branches "esac" ;
+    word : . "word" ;
+
+I2:
+    stmt' : stmt . ;
+
+I3:
+    word : "word" . ;
+
+I4:
+    stmt : "case" word . "in" branches "esac" ;
+
+I5:
+    branch : . patterns ")" commands ";;" ;
+    branches : . branch ;
+    branches : . branch branches ;
+    pattern : . "pattern" ;
+    patterns : . pattern "|" patterns ;
+    patterns : . pattern ;
+    stmt : "case" word "in" . branches "esac" ;
+
+I6:
+    pattern : "pattern" . ;
+
+I7:
+    branch : . patterns ")" commands ";;" ;
+    branches : . branch ;
+    branches : . branch branches ;
+    branches : branch . ;
+    branches : branch . branches ;
+    pattern : . "pattern" ;
+    patterns : . pattern "|" patterns ;
+    patterns : . pattern ;
+
+I8:
+    stmt : "case" word "in" branches . "esac" ;
+
+I9:
+    patterns : pattern . "|" patterns ;
+    patterns : pattern . ;
+
+I10:
+    branch : patterns . ")" commands ";;" ;
+
+I11:
+    branches : branch branches . ;
+
+I12:
+    branch : patterns ")" . commands ";;" ;
+    command : . "command" ;
+    commands : . ;
+    commands : . command ";" commands ;
+    commands : . command ;
+
+I13:
+    pattern : . "pattern" ;
+    patterns : . pattern "|" patterns ;
+    patterns : . pattern ;
+    patterns : pattern "|" . patterns ;
+
+I14:
+    stmt : "case" word "in" branches "esac" . ;
+
+I15:
+    command : "command" . ;
+
+I16:
+    commands : command . ";" commands ;
+    commands : command . ;
+
+I17:
+    branch : patterns ")" commands . ";;" ;
+
+I18:
+    patterns : pattern "|" patterns . ;
+
+I19:
+    branch : patterns ")" commands ";;" . ;
+
+I20:
+    command : . "command" ;
+    commands : . ;
+    commands : . command ";" commands ;
+    commands : . command ;
+    commands : command ";" . commands ;
+
+I21:
+    commands : command ";" commands . ;
+
+    ")" ";" ";;" "case" "command" "esac" "in" "pattern" "word" "|"   $ branch branches command commands pattern patterns stmt word
+  0                  s1                                                                                                     2     
+  1                                                         s3                                                                   4
+  2                                                                acc                                                            
+  3                                        r9                                                                                     
+  4                                        s5                                                                                     
+  5                                                  s6                     7        8                        9       10          
+  6 r10                                                        r10                                                                
+  7                                   r2             s6                     7       11                        9       10          
+  8                                  s14                                                                                          
+  9  r5                                                        s13                                                                
+ 10 s12                                                                                                                           
+ 11                                   r1                                                                                          
+ 12           r8              s15                                                           16       17                           
+ 13                                                  s6                                                       9       18          
+ 14                                                                 r0                                                            
+ 15     r11  r11                                                                                                                  
+ 16     s20   r7                                                                                                                  
+ 17          s19                                                                                                                  
+ 18  r4                                                                                                                           
+ 19                                   r3             r3                                                                           
+ 20           r8              s15                                                           16       21                           
+ 21           r6                                                                                                                  
+
+ (1) $ 0                                                                  "case" "word" "in" "pattern" ")" ";;" "esac" $    shift: 1
+ (2) $ 0 "case" 1                                                         "word" "in" "pattern" ")" ";;" "esac" $           shift: 3
+ (3) $ 0 "case" 1 "word" 3                                                "in" "pattern" ")" ";;" "esac" $                  reduce: word : "word" ;
+ (4) $ 0 "case" 1 word 4                                                  "in" "pattern" ")" ";;" "esac" $                  shift: 5
+ (5) $ 0 "case" 1 word 4 "in" 5                                           "pattern" ")" ";;" "esac" $                       shift: 6
+ (6) $ 0 "case" 1 word 4 "in" 5 "pattern" 6                               ")" ";;" "esac" $                                 reduce: pattern : "pattern" ;
+ (7) $ 0 "case" 1 word 4 "in" 5 pattern 9                                 ")" ";;" "esac" $                                 reduce: patterns : pattern ;
+ (8) $ 0 "case" 1 word 4 "in" 5 patterns 10                               ")" ";;" "esac" $                                 shift: 12
+ (9) $ 0 "case" 1 word 4 "in" 5 patterns 10 ")" 12                        ";;" "esac" $                                     reduce: commands : ;
+(10) $ 0 "case" 1 word 4 "in" 5 patterns 10 ")" 12 commands 17            ";;" "esac" $                                     shift: 19
+(11) $ 0 "case" 1 word 4 "in" 5 patterns 10 ")" 12 commands 17 ";;" 19    "esac" $                                          reduce: branch : patterns ")" commands ";;" ;
+(12) $ 0 "case" 1 word 4 "in" 5 branch 7                                  "esac" $                                          reduce: branches : branch ;
+(13) $ 0 "case" 1 word 4 "in" 5 branches 8                                "esac" $                                          shift: 14
+(14) $ 0 "case" 1 word 4 "in" 5 branches 8 "esac" 14                      $                                                 reduce: stmt : "case" word "in" branches "esac" ;
+(15) $ 0 stmt 2                                                           $                                                 accept
+

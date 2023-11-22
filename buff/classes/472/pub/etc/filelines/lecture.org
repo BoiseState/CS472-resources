@@ -1,0 +1,18 @@
+* lecture
+    cat < file
+    cat -s
+    cat.awk
+    ssp.awk
+    '1'
+    '/./'
+    '/.*/'
+    '/[^ ]/'
+    'NF'
+    cat.icn
+
+    ~/ws/472/pub/etc/file/MainScanner.java
+    ~/ws/472/pub/etc/file/MainBufferedReader.java
+
+    ~/ws/472/pub/etc/file/Main.java
+    $ rm *.class ; javac Main.java
+    $ java Main

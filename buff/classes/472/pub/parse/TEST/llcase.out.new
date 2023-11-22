@@ -1,0 +1,81 @@
+ 0) stmt : "case" word "in" branches "esac" ;
+ 1) branches : branch A ;
+ 2) A : branches ;
+ 3) A : ;
+ 4) branch : patterns ")" commands ";;" ;
+ 5) patterns : pattern B ;
+ 6) B : "|" patterns ;
+ 7) B : ;
+ 8) commands : C ;
+ 9) commands : ;
+10) C : ";" commands ;
+11) C : command ;
+12) word : "word" ;
+13) pattern : "pattern" ;
+14) command : "command" ;
+
+FIRST(")")={")"}
+FIRST(";")={";"}
+FIRST(";;")={";;"}
+FIRST("case")={"case"}
+FIRST("command")={"command"}
+FIRST("esac")={"esac"}
+FIRST("in")={"in"}
+FIRST("pattern")={"pattern"}
+FIRST("word")={"word"}
+FIRST("|")={"|"}
+FIRST(A)={^,"pattern"}
+FIRST(B)={^,"|"}
+FIRST(C)={";","command"}
+FIRST(branch)={"pattern"}
+FIRST(branches)={"pattern"}
+FIRST(command)={"command"}
+FIRST(commands)={^,";","command"}
+FIRST(pattern)={"pattern"}
+FIRST(patterns)={"pattern"}
+FIRST(stmt)={"case"}
+FIRST(word)={"word"}
+
+FOLLOW(A)={"esac"}
+FOLLOW(B)={")"}
+FOLLOW(C)={";;"}
+FOLLOW(branch)={"esac","pattern"}
+FOLLOW(branches)={"esac"}
+FOLLOW(command)={";;"}
+FOLLOW(commands)={";;"}
+FOLLOW(pattern)={")","|"}
+FOLLOW(patterns)={")"}
+FOLLOW(stmt)={$}
+FOLLOW(word)={"in"}
+
+          ")" ";" ";;" "case" "command" "esac" "in" "pattern" "word" "|"   $
+A                                            3              2
+B           7                                                          6
+C              10                    11
+branch                                                      4
+branches                                                    1
+command                              14
+commands        8    9                8
+pattern                                                    13
+patterns                                                    5
+stmt                        0
+word                                                              12
+
+ (1) $ stmt                                      "case" "word" "in" "pattern" ")" ";;" "esac" $    stmt : "case" word "in" branches "esac" ;
+ (2) $ "esac" branches "in" word "case"          "case" "word" "in" "pattern" ")" ";;" "esac" $    
+ (3) $ "esac" branches "in" word                 "word" "in" "pattern" ")" ";;" "esac" $           word : "word" ;
+ (4) $ "esac" branches "in" "word"               "word" "in" "pattern" ")" ";;" "esac" $           
+ (5) $ "esac" branches "in"                      "in" "pattern" ")" ";;" "esac" $                  
+ (6) $ "esac" branches                           "pattern" ")" ";;" "esac" $                       branches : branch A ;
+ (7) $ "esac" A branch                           "pattern" ")" ";;" "esac" $                       branch : patterns ")" commands ";;" ;
+ (8) $ "esac" A ";;" commands ")" patterns       "pattern" ")" ";;" "esac" $                       patterns : pattern B ;
+ (9) $ "esac" A ";;" commands ")" B pattern      "pattern" ")" ";;" "esac" $                       pattern : "pattern" ;
+(10) $ "esac" A ";;" commands ")" B "pattern"    "pattern" ")" ";;" "esac" $                       
+(11) $ "esac" A ";;" commands ")" B              ")" ";;" "esac" $                                 B : ;
+(12) $ "esac" A ";;" commands ")"                ")" ";;" "esac" $                                 
+(13) $ "esac" A ";;" commands                    ";;" "esac" $                                     commands : ;
+(14) $ "esac" A ";;"                             ";;" "esac" $                                     
+(15) $ "esac" A                                  "esac" $                                          A : ;
+(16) $ "esac"                                    "esac" $                                          
+(17) $                                           $                                                 
+

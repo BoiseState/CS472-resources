@@ -1,0 +1,7 @@
+# icon cat.icn
+
+procedure main()
+   while write(read())
+#   every write(!&input)
+#   every write(""~==!&input)
+end

@@ -1,0 +1,290 @@
+ 0) grammar : ruleset ;
+ 1) grammar : ruleset grammar ;
+ 2) ruleset : first ;
+ 3) ruleset : first rest ;
+ 4) first : symbol ":" symbols ";" ;
+ 5) rest : next ;
+ 6) rest : next rest ;
+ 7) next : "|" symbols ";" ;
+ 8) symbols : ;
+ 9) symbols : symbol symbols ;
+10) symbol : id ;
+11) symbol : kw ;
+
+FIRST(":")={":"}
+FIRST(";")={";"}
+FIRST("|")={"|"}
+FIRST(first)={id,kw}
+FIRST(grammar)={id,kw}
+FIRST(id)={id}
+FIRST(kw)={kw}
+FIRST(next)={"|"}
+FIRST(rest)={"|"}
+FIRST(ruleset)={id,kw}
+FIRST(symbol)={id,kw}
+FIRST(symbols)={^,id,kw}
+
+FOLLOW(first)={"|",$,id,kw}
+FOLLOW(grammar)={$}
+FOLLOW(next)={"|",$,id,kw}
+FOLLOW(rest)={$,id,kw}
+FOLLOW(ruleset)={$,id,kw}
+FOLLOW(symbol)={":",";",id,kw}
+FOLLOW(symbols)={";"}
+
+I0:
+    first : . symbol ":" symbols ";" ;
+    grammar : . ruleset ;
+    grammar : . ruleset grammar ;
+    grammar' : . grammar ;
+    ruleset : . first ;
+    ruleset : . first rest ;
+    symbol : . id ;
+    symbol : . kw ;
+
+I1:
+    next : . "|" symbols ";" ;
+    rest : . next ;
+    rest : . next rest ;
+    ruleset : first . ;
+    ruleset : first . rest ;
+
+I2:
+    grammar' : grammar . ;
+
+I3:
+    symbol : id . ;
+
+I4:
+    symbol : kw . ;
+
+I5:
+    first : . symbol ":" symbols ";" ;
+    grammar : . ruleset ;
+    grammar : . ruleset grammar ;
+    grammar : ruleset . ;
+    grammar : ruleset . grammar ;
+    ruleset : . first ;
+    ruleset : . first rest ;
+    symbol : . id ;
+    symbol : . kw ;
+
+I6:
+    first : symbol . ":" symbols ";" ;
+
+I7:
+    grammar : ruleset grammar . ;
+
+I8:
+    first : symbol ":" . symbols ";" ;
+    symbol : . id ;
+    symbol : . kw ;
+    symbols : . ;
+    symbols : . symbol symbols ;
+
+I9:
+    next : "|" . symbols ";" ;
+    symbol : . id ;
+    symbol : . kw ;
+    symbols : . ;
+    symbols : . symbol symbols ;
+
+I10:
+    next : . "|" symbols ";" ;
+    rest : . next ;
+    rest : . next rest ;
+    rest : next . ;
+    rest : next . rest ;
+
+I11:
+    ruleset : first rest . ;
+
+I12:
+    symbol : . id ;
+    symbol : . kw ;
+    symbols : . ;
+    symbols : . symbol symbols ;
+    symbols : symbol . symbols ;
+
+I13:
+    first : symbol ":" symbols . ";" ;
+
+I14:
+    next : "|" symbols . ";" ;
+
+I15:
+    rest : next rest . ;
+
+I16:
+    first : symbol ":" symbols ";" . ;
+
+I17:
+    next : "|" symbols ";" . ;
+
+I18:
+    symbols : symbol symbols . ;
+
+    ":" ";" "|"  id  kw   $ first grammar next rest ruleset symbol symbols
+  0              s3  s4         1       2                 5      6        
+  1          s9  r2  r2  r2                 10   11                       
+  2                     acc                                               
+  3 r10 r10     r10 r10                                                   
+  4 r11 r11     r11 r11                                                   
+  5              s3  s4  r0     1       7                 5      6        
+  6  s8                                                                   
+  7                      r1                                               
+  8      r8      s3  s4                                         12      13
+  9      r8      s3  s4                                         12      14
+ 10          s9  r5  r5  r5                 10   15                       
+ 11              r3  r3  r3                                               
+ 12      r8      s3  s4                                         12      18
+ 13     s16                                                               
+ 14     s17                                                               
+ 15              r6  r6  r6                                               
+ 16          r4  r4  r4  r4                                               
+ 17          r7  r7  r7  r7                                               
+ 18      r9                                                               
+
+ (1) $ 0                                                                                                    id ":" id ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $    shift: 3
+ (2) $ 0 id 3                                                                                               ":" id ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $       reduce: symbol : id ;
+ (3) $ 0 symbol 6                                                                                           ":" id ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $       shift: 8
+ (4) $ 0 symbol 6 ":" 8                                                                                     id ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $           shift: 3
+ (5) $ 0 symbol 6 ":" 8 id 3                                                                                ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $              reduce: symbol : id ;
+ (6) $ 0 symbol 6 ":" 8 symbol 12                                                                           ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $              reduce: symbols : ;
+ (7) $ 0 symbol 6 ":" 8 symbol 12 symbols 18                                                                ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $              reduce: symbols : symbol symbols ;
+ (8) $ 0 symbol 6 ":" 8 symbols 13                                                                          ";" "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $              shift: 16
+ (9) $ 0 symbol 6 ":" 8 symbols 13 ";" 16                                                                   "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                  reduce: first : symbol ":" symbols ";" ;
+(10) $ 0 first 1                                                                                            "|" id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                  shift: 9
+(11) $ 0 first 1 "|" 9                                                                                      id id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                      shift: 3
+(12) $ 0 first 1 "|" 9 id 3                                                                                 id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                         reduce: symbol : id ;
+(13) $ 0 first 1 "|" 9 symbol 12                                                                            id ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                         shift: 3
+(14) $ 0 first 1 "|" 9 symbol 12 id 3                                                                       ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                            reduce: symbol : id ;
+(15) $ 0 first 1 "|" 9 symbol 12 symbol 12                                                                  ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                            reduce: symbols : ;
+(16) $ 0 first 1 "|" 9 symbol 12 symbol 12 symbols 18                                                       ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                            reduce: symbols : symbol symbols ;
+(17) $ 0 first 1 "|" 9 symbol 12 symbols 18                                                                 ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                            reduce: symbols : symbol symbols ;
+(18) $ 0 first 1 "|" 9 symbols 14                                                                           ";" id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                            shift: 17
+(19) $ 0 first 1 "|" 9 symbols 14 ";" 17                                                                    id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                reduce: next : "|" symbols ";" ;
+(20) $ 0 first 1 next 10                                                                                    id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                reduce: rest : next ;
+(21) $ 0 first 1 rest 11                                                                                    id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                reduce: ruleset : first rest ;
+(22) $ 0 ruleset 5                                                                                          id ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                shift: 3
+(23) $ 0 ruleset 5 id 3                                                                                     ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                   reduce: symbol : id ;
+(24) $ 0 ruleset 5 symbol 6                                                                                 ":" id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                   shift: 8
+(25) $ 0 ruleset 5 symbol 6 ":" 8                                                                           id ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                       shift: 3
+(26) $ 0 ruleset 5 symbol 6 ":" 8 id 3                                                                      ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                          reduce: symbol : id ;
+(27) $ 0 ruleset 5 symbol 6 ":" 8 symbol 12                                                                 ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                          reduce: symbols : ;
+(28) $ 0 ruleset 5 symbol 6 ":" 8 symbol 12 symbols 18                                                      ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                          reduce: symbols : symbol symbols ;
+(29) $ 0 ruleset 5 symbol 6 ":" 8 symbols 13                                                                ";" "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                          shift: 16
+(30) $ 0 ruleset 5 symbol 6 ":" 8 symbols 13 ";" 16                                                         "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                              reduce: first : symbol ":" symbols ";" ;
+(31) $ 0 ruleset 5 first 1                                                                                  "|" id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                              shift: 9
+(32) $ 0 ruleset 5 first 1 "|" 9                                                                            id id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                  shift: 3
+(33) $ 0 ruleset 5 first 1 "|" 9 id 3                                                                       id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                     reduce: symbol : id ;
+(34) $ 0 ruleset 5 first 1 "|" 9 symbol 12                                                                  id ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                     shift: 3
+(35) $ 0 ruleset 5 first 1 "|" 9 symbol 12 id 3                                                             ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                        reduce: symbol : id ;
+(36) $ 0 ruleset 5 first 1 "|" 9 symbol 12 symbol 12                                                        ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                        reduce: symbols : ;
+(37) $ 0 ruleset 5 first 1 "|" 9 symbol 12 symbol 12 symbols 18                                             ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                        reduce: symbols : symbol symbols ;
+(38) $ 0 ruleset 5 first 1 "|" 9 symbol 12 symbols 18                                                       ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                        reduce: symbols : symbol symbols ;
+(39) $ 0 ruleset 5 first 1 "|" 9 symbols 14                                                                 ";" id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                        shift: 17
+(40) $ 0 ruleset 5 first 1 "|" 9 symbols 14 ";" 17                                                          id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                            reduce: next : "|" symbols ";" ;
+(41) $ 0 ruleset 5 first 1 next 10                                                                          id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                            reduce: rest : next ;
+(42) $ 0 ruleset 5 first 1 rest 11                                                                          id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                            reduce: ruleset : first rest ;
+(43) $ 0 ruleset 5 ruleset 5                                                                                id ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                            shift: 3
+(44) $ 0 ruleset 5 ruleset 5 id 3                                                                           ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                               reduce: symbol : id ;
+(45) $ 0 ruleset 5 ruleset 5 symbol 6                                                                       ":" id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                               shift: 8
+(46) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8                                                                 id kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                   shift: 3
+(47) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 id 3                                                            kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                      reduce: symbol : id ;
+(48) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12                                                       kw id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                      shift: 4
+(49) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 kw 4                                                  id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                         reduce: symbol : kw ;
+(50) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12                                             id kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                         shift: 3
+(51) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 id 3                                        kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                            reduce: symbol : id ;
+(52) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12                                   kw ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                            shift: 4
+(53) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12 kw 4                              ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               reduce: symbol : kw ;
+(54) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12 symbol 12                         ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               reduce: symbols : ;
+(55) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12 symbol 12 symbols 18              ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               reduce: symbols : symbol symbols ;
+(56) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12 symbols 18                        ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               reduce: symbols : symbol symbols ;
+(57) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbols 18                                  ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               reduce: symbols : symbol symbols ;
+(58) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbols 18                                            ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               reduce: symbols : symbol symbols ;
+(59) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13                                                      ";" id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                               shift: 16
+(60) $ 0 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13 ";" 16                                               id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                   reduce: first : symbol ":" symbols ";" ;
+(61) $ 0 ruleset 5 ruleset 5 first 1                                                                        id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                   reduce: ruleset : first ;
+(62) $ 0 ruleset 5 ruleset 5 ruleset 5                                                                      id ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                   shift: 3
+(63) $ 0 ruleset 5 ruleset 5 ruleset 5 id 3                                                                 ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                      reduce: symbol : id ;
+(64) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6                                                             ":" id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                      shift: 8
+(65) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8                                                       id ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                          shift: 3
+(66) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 id 3                                                  ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                             reduce: symbol : id ;
+(67) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12                                             ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                             reduce: symbols : ;
+(68) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbols 18                                  ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                             reduce: symbols : symbol symbols ;
+(69) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13                                            ";" "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                             shift: 16
+(70) $ 0 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13 ";" 16                                     "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                 reduce: first : symbol ":" symbols ";" ;
+(71) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1                                                              "|" id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                 shift: 9
+(72) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9                                                        id id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                     shift: 3
+(73) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 id 3                                                   id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                        reduce: symbol : id ;
+(74) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12                                              id ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                        shift: 3
+(75) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 id 3                                         ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                           reduce: symbol : id ;
+(76) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbol 12                                    ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                           reduce: symbols : ;
+(77) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbol 12 symbols 18                         ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                           reduce: symbols : symbol symbols ;
+(78) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbols 18                                   ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                           reduce: symbols : symbol symbols ;
+(79) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbols 14                                             ";" id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                           shift: 17
+(80) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbols 14 ";" 17                                      id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                               reduce: next : "|" symbols ";" ;
+(81) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 next 10                                                      id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                               reduce: rest : next ;
+(82) $ 0 ruleset 5 ruleset 5 ruleset 5 first 1 rest 11                                                      id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                               reduce: ruleset : first rest ;
+(83) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5                                                            id ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                               shift: 3
+(84) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 id 3                                                       ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                  reduce: symbol : id ;
+(85) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6                                                   ":" kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                  shift: 8
+(86) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8                                             kw id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                      shift: 4
+(87) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 kw 4                                        id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                         reduce: symbol : kw ;
+(88) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12                                   id kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                         shift: 3
+(89) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 id 3                              kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                            reduce: symbol : id ;
+(90) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12                         kw ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                            shift: 4
+(91) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 kw 4                    ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                               reduce: symbol : kw ;
+(92) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12               ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                               reduce: symbols : ;
+(93) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbol 12 symbols 18    ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                               reduce: symbols : symbol symbols ;
+(94) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbol 12 symbols 18              ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                               reduce: symbols : symbol symbols ;
+(95) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbols 18                        ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                               reduce: symbols : symbol symbols ;
+(96) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13                                  ";" id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                               shift: 16
+(97) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13 ";" 16                           id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                   reduce: first : symbol ":" symbols ";" ;
+(98) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1                                                    id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                   reduce: ruleset : first ;
+(99) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5                                                  id ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                   shift: 3
+(100) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 id 3                                             ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                      reduce: symbol : id ;
+(101) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6                                         ":" ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                      shift: 8
+(102) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8                                   ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                          reduce: symbols : ;
+(103) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13                        ";" "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                          shift: 16
+(104) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13 ";" 16                 "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                              reduce: first : symbol ":" symbols ";" ;
+(105) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1                                          "|" id id ";" id ":" id ";" "|" id ";" $                                                                                                                                              shift: 9
+(106) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9                                    id id ";" id ":" id ";" "|" id ";" $                                                                                                                                                  shift: 3
+(107) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 id 3                               id ";" id ":" id ";" "|" id ";" $                                                                                                                                                     reduce: symbol : id ;
+(108) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12                          id ";" id ":" id ";" "|" id ";" $                                                                                                                                                     shift: 3
+(109) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 id 3                     ";" id ":" id ";" "|" id ";" $                                                                                                                                                        reduce: symbol : id ;
+(110) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbol 12                ";" id ":" id ";" "|" id ";" $                                                                                                                                                        reduce: symbols : ;
+(111) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbol 12 symbols 18     ";" id ":" id ";" "|" id ";" $                                                                                                                                                        reduce: symbols : symbol symbols ;
+(112) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbols 18               ";" id ":" id ";" "|" id ";" $                                                                                                                                                        reduce: symbols : symbol symbols ;
+(113) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbols 14                         ";" id ":" id ";" "|" id ";" $                                                                                                                                                        shift: 17
+(114) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbols 14 ";" 17                  id ":" id ";" "|" id ";" $                                                                                                                                                            reduce: next : "|" symbols ";" ;
+(115) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 next 10                                  id ":" id ";" "|" id ";" $                                                                                                                                                            reduce: rest : next ;
+(116) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 rest 11                                  id ":" id ";" "|" id ";" $                                                                                                                                                            reduce: ruleset : first rest ;
+(117) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5                                        id ":" id ";" "|" id ";" $                                                                                                                                                            shift: 3
+(118) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 id 3                                   ":" id ";" "|" id ";" $                                                                                                                                                               reduce: symbol : id ;
+(119) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6                               ":" id ";" "|" id ";" $                                                                                                                                                               shift: 8
+(120) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8                         id ";" "|" id ";" $                                                                                                                                                                   shift: 3
+(121) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 id 3                    ";" "|" id ";" $                                                                                                                                                                      reduce: symbol : id ;
+(122) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12               ";" "|" id ";" $                                                                                                                                                                      reduce: symbols : ;
+(123) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbol 12 symbols 18    ";" "|" id ";" $                                                                                                                                                                      reduce: symbols : symbol symbols ;
+(124) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13              ";" "|" id ";" $                                                                                                                                                                      shift: 16
+(125) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 symbol 6 ":" 8 symbols 13 ";" 16       "|" id ";" $                                                                                                                                                                          reduce: first : symbol ":" symbols ";" ;
+(126) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1                                "|" id ";" $                                                                                                                                                                          shift: 9
+(127) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9                          id ";" $                                                                                                                                                                              shift: 3
+(128) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 id 3                     ";" $                                                                                                                                                                                 reduce: symbol : id ;
+(129) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12                ";" $                                                                                                                                                                                 reduce: symbols : ;
+(130) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbol 12 symbols 18     ";" $                                                                                                                                                                                 reduce: symbols : symbol symbols ;
+(131) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbols 14               ";" $                                                                                                                                                                                 shift: 17
+(132) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 "|" 9 symbols 14 ";" 17        $                                                                                                                                                                                     reduce: next : "|" symbols ";" ;
+(133) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 next 10                        $                                                                                                                                                                                     reduce: rest : next ;
+(134) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 first 1 rest 11                        $                                                                                                                                                                                     reduce: ruleset : first rest ;
+(135) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5                              $                                                                                                                                                                                     reduce: grammar : ruleset ;
+(136) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 grammar 7                              $                                                                                                                                                                                     reduce: grammar : ruleset grammar ;
+(137) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 ruleset 5 grammar 7                                        $                                                                                                                                                                                     reduce: grammar : ruleset grammar ;
+(138) $ 0 ruleset 5 ruleset 5 ruleset 5 ruleset 5 grammar 7                                                  $                                                                                                                                                                                     reduce: grammar : ruleset grammar ;
+(139) $ 0 ruleset 5 ruleset 5 ruleset 5 grammar 7                                                            $                                                                                                                                                                                     reduce: grammar : ruleset grammar ;
+(140) $ 0 ruleset 5 ruleset 5 grammar 7                                                                      $                                                                                                                                                                                     reduce: grammar : ruleset grammar ;
+(141) $ 0 ruleset 5 grammar 7                                                                                $                                                                                                                                                                                     reduce: grammar : ruleset grammar ;
+(142) $ 0 grammar 2                                                                                          $                                                                                                                                                                                     accept
+

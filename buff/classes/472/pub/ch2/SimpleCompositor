@@ -1,0 +1,8 @@
+// create cursor based on parent
+for (... child= ...) {
+    // ask (leaf) child to set size, based on window
+    // ask child to set position, based on cursor
+    // ask child to compose itself, recursively
+    // ask parent to adjust itself and cursor, based on child
+}
+// ask parent to adjust itself, based on cursor

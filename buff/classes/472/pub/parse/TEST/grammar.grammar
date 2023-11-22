@@ -1,0 +1,18 @@
+grammar : ruleset ;
+        | ruleset grammar ;
+
+ruleset : first ;
+        | first rest ;
+
+first   : symbol ":" symbols ";" ;
+
+rest    : next ;
+        | next rest ;
+
+next    : "|" symbols ";" ;
+
+symbols : ;
+        | symbol symbols ;
+
+symbol  : id ;
+        | kw ;

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+Test() {
+    t=$1
+    shift
+    export JavaFileRead=BufferedReader
+    export JavaFileRead=Scanner
+    java Main "$@" \
+	--grammar $t.grammar \
+	--string $t.string \
+	> $t.out.new 2>&1
+    cmp $t.out.new $t.out.old
+}
+
+rm *.class
+set -e
+javac -g *.java
+
+ll="--table-lr --parse-lr --table-ll --parse-ll"
+all="--table-ll --parse-ll"
+for f in TEST/*.grammar ; do
+    f=${f%.grammar}
+    b=${f##*/}
+    echo $b
+    args=
+    case $b in
+	ex4.16) args="$all" ;;
+	llcase) args="$ll" ;;
+	pr4.37) args="$all" ;;
+    esac
+set +e
+    Test $f $args "$@"
+done
