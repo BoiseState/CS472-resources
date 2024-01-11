@@ -3,8 +3,8 @@
 #ifndef PAIR_H
 #define PAIR_H
 
-#include <string>
 #include <sstream>
+#include <string>
 
 using namespace std;
 

@@ -19,19 +19,19 @@ int main() {
     cout << p->toString() << endl;
     delete p; }
 
-  { Pair<string,int>& pr=p;	                        // reference
+  { Pair<string,int>& pr=p;	                            // reference
     cout << pr.toString() << endl; }
 
   { decltype((p)) pr=p;	                                // reference
     cout << pr.toString() << endl; }
 
-  { auto pp=&p;			                        // pointer
+  { auto pp=&p;			                                    // pointer
     cout << pp->toString() << endl; }
 
-  { decltype(&p) pp=&p;    	                        // pointer
+  { decltype(&p) pp=&p;    	                            // pointer
     cout << pp->toString() << endl; }
 
-  { auto pc=p;			                        // copy
+  { auto pc=p;			                                    // copy
     cout << pc.toString() << endl; }
 
   return 0;

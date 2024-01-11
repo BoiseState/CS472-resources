@@ -7,7 +7,7 @@ using namespace std;
 #include "Pair.h"
 
 int main() {
-  Pair<string,int> p("Hi",100);	                        // object
+  Pair<string,int> p("Hi",100); // object
   cout << p.toString() << endl;
   return 0;
 }

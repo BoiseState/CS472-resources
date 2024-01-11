@@ -12,7 +12,7 @@ public:
 class B {
 public:
   const char *toString() { return "B"; }
-  operator A() { cout<<"casting"<<endl; A a; return a; }
+  operator A() { cout << "casting" << endl; A a; return a; }
 };
 
 int main() {
@@ -24,14 +24,14 @@ int main() {
   i=d;                      // implicit
   d=static_cast<double>(i); // explicit
   i=static_cast<int>(d);    // explicit
-  cout<<i<<" "<<d<<endl;
+  cout << i << " " << d << endl;
 
   A a;
   B b;
   a=(A)b;              // explicit
   a=b;                 // implicit
   a=static_cast<A>(b); // explicit
-  cout<<a.toString()<<" "<<b.toString()<<endl;
+  cout << a.toString() << " " << b.toString() << endl;
   // illegal:
   // b=(B)a;			        // explicit
   // b=a;                 // implicit
@@ -42,7 +42,7 @@ int main() {
   *ap=(A)*bp;              // explicit
   *ap=*bp;                 // implicit
   *ap=static_cast<A>(*bp); // explicit
-  cout<<ap->toString()<<" "<<bp->toString()<<endl;
+  cout << ap->toString() << " " << bp->toString() << endl;
 
   // illegal:
   // *bp=(B)*ap;                // explicit
