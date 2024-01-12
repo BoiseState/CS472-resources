@@ -4,8 +4,8 @@
 
 using namespace std;
 
-void foo(int i)    { cout<<"foo(int i)"<<endl; }
-void foo(double d) { cout<<"foo(double d)"<<endl; }
+void foo(int i)    { cout << "foo(int i)" << endl; }
+void foo(double d) { cout << "foo(double d)" << endl; }
 
 int main() {
   int i=77;
