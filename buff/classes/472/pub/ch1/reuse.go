@@ -5,7 +5,7 @@ package main
 type IPerson interface { Name() string }
 type Person struct { name string }
 
-type IStudent interface { IPerson }
+type IStudent interface { IPerson }	// is-a: inheritance
 type Student struct {
 	Person						// is-a: inheritance
 	mom Person					// has-a: composition
