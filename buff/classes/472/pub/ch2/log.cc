@@ -5,8 +5,8 @@
 
 using namespace std;
 
-#include "log.hh"
-#include "csv.hh"
+#include "log.h"
+#include "csv.h"
 #include "err.h"
 
 FILE* Log::f=0;
