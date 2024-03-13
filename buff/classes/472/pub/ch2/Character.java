@@ -1,7 +1,7 @@
 public class Character extends Glyph {
 
-    ...
+  // ...
 
-    public void accept(GlyphVisitor v) { v.visit(this); }
+  public void accept(GlyphVisitor v) { v.visit(this); }
 
 }
