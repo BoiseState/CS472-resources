@@ -1,0 +1,14 @@
+                                                                /30
+
+
+
+
+/5  Compile/Execute
+
+/5  UML
+
+/10 Window
+
+/10 WindowFactory (Singleton)
+        AwtWindowFactory
+        SwingWindowFactory
