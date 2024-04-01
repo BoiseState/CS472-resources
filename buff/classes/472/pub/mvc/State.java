@@ -1,6 +1,6 @@
 public class State {
 
-    public StringBuffer str=new StringBuffer();
-    public int pos=0;
+  public StringBuffer str=new StringBuffer();
+  public int pos=0;
 
 }
