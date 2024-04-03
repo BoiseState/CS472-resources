@@ -1,0 +1,23 @@
+                                                                /35
+
+
+
+
+/5  Compile/Execute
+
+/5  UML
+
+/5  Button
+
+/5  Command History
+        Singleton
+        Undo/Redo
+
+/5  Glyph
+        GlyphFinder
+
+/5  IncrFontCommand
+
+/5  Lexi
+        Window
+        Keymap
