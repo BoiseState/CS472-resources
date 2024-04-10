@@ -5,7 +5,7 @@ Test() {
     shift
     export JavaFileRead=BufferedReader
     export JavaFileRead=Scanner
-    java Main "$@" \
+    java -cp .:../../parse Main "$@" \
 	--grammar $t.grammar \
 	--string $t.string \
 	> $t.out.new 2>&1

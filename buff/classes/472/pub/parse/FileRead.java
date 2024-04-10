@@ -2,7 +2,7 @@
 
 interface FileRead {
 
-    void init();
-    String read();
+  void init();
+  String read();
 
 }
