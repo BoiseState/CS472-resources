@@ -22,11 +22,16 @@ public class Arg implements Comparable<Arg> {
       args.put(nick,this);
   }
 
-  protected String val() { return _val==null ? _def : _val; }
+  protected String val() {
+    return _val==null ? _def : _val;
+  }
 
-  public void init(Args args) {}
+  public void init(Args args) {
+  }
 
-  public ArgWrap get() { return null; }
+  public ArgWrap get() {
+    return null;
+  }
 
   public String toString() {
     String s="";

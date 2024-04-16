@@ -7,7 +7,8 @@ public class ArgWrap {
 
   protected ArgWrap() {}
 
-  protected ArgWrap(Boolean bool,
+  protected ArgWrap(
+    Boolean bool,
     Integer integer,
     String string,
     FileRead fileRead) {

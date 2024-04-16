@@ -2,16 +2,16 @@ public class Main {
 
   public static void initArgs(String[] argv) {
     Args args=Args.instance(argv);
-    args.add(new ArgFileRead(),"--grammar","-g","<file> #name of grammar file","grammar");
-    args.add(new ArgFileRead(),"--string","-s","<file> #name of file containing string to parse","string");
-    args.add(new ArgString(),"--singles",null,"<string> #single-character tokens (space separated)",": ; |");
-    args.add(new ArgBool(),"--debug-symbols",null,"<true/false> #print details during symbol analysis","false");
-    args.add(new ArgBool(),"--table-lr",null,"<true/false> #build LR table","true");
-    args.add(new ArgBool(),"--parse-lr",null,"<true/false> #parse using LR table","true");
-    args.add(new ArgBool(),"--table-ll",null,"<true/false> #build LL table","false");
-    args.add(new ArgBool(),"--parse-ll",null,"<true/false> #parse using LL table","false");
-    args.add(new ArgBool(),"--debug-parse",null,"<true/false> #print details during string parsing","false");
-    args.add(new ArgUsage(),"--usage","-u","#show usage",null);
+    args.add(new ArgFileRead(), "--grammar","-g",       "<file> #name of grammar file","grammar");
+    args.add(new ArgFileRead(), "--string","-s",        "<file> #name of file containing string to parse","string");
+    args.add(new ArgString(),   "--singles",null,       "<string> #single-character tokens (space separated)",": ; |");
+    args.add(new ArgBool(),     "--debug-symbols",null, "<true/false> #print details during symbol analysis","false");
+    args.add(new ArgBool(),     "--table-lr",null,      "<true/false> #build LR table","true");
+    args.add(new ArgBool(),     "--parse-lr",null,      "<true/false> #parse using LR table","true");
+    args.add(new ArgBool(),     "--table-ll",null,      "<true/false> #build LL table","false");
+    args.add(new ArgBool(),     "--parse-ll",null,      "<true/false> #parse using LL table","false");
+    args.add(new ArgBool(),     "--debug-parse",null,   "<true/false> #print details during string parsing","false");
+    args.add(new ArgUsage(),    "--usage","-u",         "#show usage",null);
     args.init();
   }
 
