@@ -5,17 +5,17 @@
 
 public class NodeNext extends Node {
 
-    private Node symbols;
+  private Node symbols;
 
-    public Node parse() throws ParseException {
-	eat("|");
-	symbols=new NodeSymbols().parse();
-	eat(";");
-	return this;
-    }
+  public Node parse() throws ParseException {
+    eat("|");
+    symbols=new NodeSymbols().parse();
+    eat(";");
+    return this;
+  }
 
-    public TreeIterator<Node> createIterator() { return ci(symbols); }
+  public TreeIterator<Node> createIterator() { return ci(symbols); }
 
-    public void accept(NodeVisitor v) { v.visit(this); }
+  public void accept(NodeVisitor v) { v.visit(this); }
 
 }
