@@ -16,8 +16,8 @@ public class Coercion {
     // illegal:
     // i=d; // implicit
 
-    A a=new A();
-    B b=new B();
+    var a=new A();
+    var b=new B();
     System.out.println(a+" "+b);
     // illegal:
     // a=b;    // implicit

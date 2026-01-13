@@ -6,12 +6,12 @@ public class TryBox {
     Box<String> b;
     String s="stuff";
 
-    b=new BoxMagic<String>();
+    b=new BoxMagic<>();
     b.put(s);
     System.out.println(b.get());
     System.out.println(b.get());
 
-    b=new BoxPlain<String>();
+    b=new BoxPlain<>();
     b.put(s);
     System.out.println(b.get());
     System.out.println(b.get());
