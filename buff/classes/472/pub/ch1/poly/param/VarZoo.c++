@@ -1,4 +1,5 @@
-// g++ -Wall -g -o VarZoo VarZoo.c++ Pair1.c++ && ./VarZoo
+// g++ -Wall -g -o VarZoo VarZoo.c++ PairStrInt.c++ && ./VarZoo
+
 // for more autocrazy, see ../../auto.cc (and auto.c)
 
 #include <iostream>

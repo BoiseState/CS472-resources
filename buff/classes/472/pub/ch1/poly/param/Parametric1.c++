@@ -1,4 +1,4 @@
-// g++ -Wall -g -o Parametric Parametric1.c++ Pair1.c++ && ./Parametric
+// g++ -Wall -g -o Parametric Parametric1.c++ PairStrInt.c++ && ./Parametric
 
 #include <iostream>
 

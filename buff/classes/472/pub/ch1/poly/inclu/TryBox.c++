@@ -1,7 +1,6 @@
 // g++ -Wall -g -o TryBox TryBox.c++ && ./TryBox
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 

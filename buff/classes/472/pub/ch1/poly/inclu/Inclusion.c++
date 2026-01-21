@@ -1,7 +1,6 @@
 // g++ -Wall -g -o Inclusion Inclusion.c++ && ./Inclusion
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 

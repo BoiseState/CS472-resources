@@ -4,8 +4,6 @@
 
 using namespace std;
 
-template class Pair<string,int>;
-
 template <class Left, class Rite>
 Pair<Left,Rite>::Pair(Left left, Rite rite) {
   putLeft(left);
