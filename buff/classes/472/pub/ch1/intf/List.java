@@ -17,7 +17,7 @@ public class List<Data> implements Stack<Data>,Queue<Data> {
   public void wait(Data data) {}
 
   public static void main(String[] args) {
-    List<Integer> l=new List<Integer>();
+    List<Integer> l=new List<>();
     l.push(1);
     Integer i=l.next();
     l.push(i);

@@ -9,6 +9,8 @@ using namespace std;
 #include "HashTable.h"
 
 int main() {
+  // program to an interface!
+  // NOT: auto t=...
   Table<string,int>* t=new HashTable<string,int>();
   string k="Hi";
   int d=100;

@@ -8,7 +8,7 @@ using namespace std;
 #include "BoxPlain.h"
 
 int main() {
-  Box<string>* b;
+  Box<string>* b;               // program to an interface!
   string s="stuff";
   
   b=new BoxMagic<string>();

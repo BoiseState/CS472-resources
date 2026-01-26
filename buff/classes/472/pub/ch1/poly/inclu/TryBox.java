@@ -3,7 +3,7 @@
 public class TryBox {
 
   public static void main(String[] args) {
-    Box<String> b;
+    Box<String> b;		// program to an interface!
     String s="stuff";
 
     b=new BoxMagic<>();

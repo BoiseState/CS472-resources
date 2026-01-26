@@ -13,7 +13,7 @@ public class DynamicBinding {
   }
 
   public DynamicBinding() {
-    Table<String,Integer> t;
+    Table<String,Integer> t;	// program to an interface!
     if (Math.random()<0.5)
       t=new FooTable<String,Integer>();
     else

@@ -23,7 +23,7 @@ public:
   SubFoo();
   SubFoo(SubFoo const& sf);
   ~SubFoo();
-  SubFoo& operator= (SubFoo const& sf);
+  SubFoo& operator=(SubFoo const& sf);
   void toString();
 private:
   int id;
@@ -50,7 +50,7 @@ void SubFoo::toString() { cout << "foo: " << id << endl;}
 // allows chaining of assignments.
 // 5) Assignment operators should make sure that self assignment does
 // nothing.
-SubFoo& SubFoo::operator= (SubFoo const& sf) {
+SubFoo& SubFoo::operator=(SubFoo const& sf) {
   cout << "SubFoo assignment operator" << endl;
   this->id=sf.id;
   return *this;

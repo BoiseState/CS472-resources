@@ -10,6 +10,8 @@ using namespace std;
 
 int main() {
   HashTable<string,int> h;
+  // program to an interface!
+  // NOT: decltype((h)) t=...
   Table<string,int>& t=h;
   string k="Hi";
   int d=100;
