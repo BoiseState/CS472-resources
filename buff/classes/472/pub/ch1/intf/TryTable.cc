@@ -1,11 +1,9 @@
 // g++ -Wall -g -o TryTable TryTable.cc && ./TryTable
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 
-#include "Table.h"
 #include "HashTable.h"
 
 int main() {

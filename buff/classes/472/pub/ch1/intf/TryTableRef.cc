@@ -1,11 +1,9 @@
 // g++ -Wall -g -o TryTableRef TryTableRef.cc && ./TryTableRef
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 
-#include "Table.h"
 #include "HashTable.h"
 
 int main() {
