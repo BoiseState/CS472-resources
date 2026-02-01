@@ -25,7 +25,7 @@ public:
 };
 
 int main() {
-  A* a;
+  A *a;
   a=new A; cout << a->foo() << endl;
   a=new X; cout << a->foo() << endl;
   a=new Y; cout << a->foo() << endl;

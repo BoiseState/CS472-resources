@@ -9,18 +9,18 @@ template <class Item>
 class BoxPlain : public Box<Item> {
 public:
 
-  void put(Item* item) {
+  void put(Item *item) {
     this->item=item;
   }
 
-  Item* get() {
-    Item* item=this->item;
+  Item *get() {
+    Item *item=this->item;
     this->item=0;
     return item;
   }
 
 private:
-  Item* item;
+  Item *item;
 };
 
 #endif

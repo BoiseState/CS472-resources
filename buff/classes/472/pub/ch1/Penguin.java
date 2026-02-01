@@ -7,12 +7,16 @@ interface Bird {
 
 public class Penguin implements Bird {
 
-  private void fly() {} 	// illegal
+  // private                    // illegal
+  public                        // legal
+    void fly()       { System.out.println("can't fly"); }
   public void hop()  { System.out.println("hop"); }
 
   public static void main(String[] args) {
     Penguin h=new Penguin();
+    // Bird h=new Penguin();
     h.hop();
+    h.fly();
   }
 
 }

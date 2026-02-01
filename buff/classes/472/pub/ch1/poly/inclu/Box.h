@@ -6,8 +6,8 @@
 template <class Item>
 class Box {
 public:
-  virtual void put(Item* item)=0;
-  virtual Item* get()=0;
+  virtual void put(Item *item)=0;
+  virtual Item *get()=0;
 };
 
 #endif

@@ -12,7 +12,7 @@ int main() {
   Pair<string,int> p("Hi",100);	                        // object
   cout << p.toString() << endl;
 
-  { Pair<string,int>* p=new Pair<string,int>("Hi",100); // pointer
+  { Pair<string,int> *p=new Pair<string,int>("Hi",100); // pointer
     cout << p->toString() << endl;
     delete p; }
 
@@ -20,7 +20,7 @@ int main() {
     cout << p->toString() << endl;
     delete p; }
 
-  { Pair<string,int>& pr=p;	                            // reference
+  { Pair<string,int> &pr=p;	                            // reference
     cout << pr.toString() << endl; }
 
   { decltype((p)) pr=p;	                                // reference

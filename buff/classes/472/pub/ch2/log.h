@@ -15,11 +15,11 @@
 #include <stdio.h>
 
 class Log {
-  static FILE* f;
+  static FILE *f;
   Log() {}
 public:
-  static void open(int log, char* logfile);
-  static void log(char* msg[]);
+  static void open(int log, char *logfile);
+  static void log(char *msg[]);
   static void close();
 };
 

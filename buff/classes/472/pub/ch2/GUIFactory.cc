@@ -13,18 +13,18 @@ class GreenLabel : public Label
 
 class GUIFactory {
 public:
-  virtual Label* labelFactoryMethod()=0;
+  virtual Label *labelFactoryMethod()=0;
 };
 
 template<class T>
 class StandardGUIFactory : public GUIFactory {
 public:
-  Label* labelFactoryMethod() { return new T(); }
+  Label *labelFactoryMethod() { return new T(); }
 };
 
 int main() {
-  GUIFactory* guiFactory=new StandardGUIFactory<RedLabel>();
-  Label* label=guiFactory->labelFactoryMethod();
+  GUIFactory *guiFactory=new StandardGUIFactory<RedLabel>();
+  Label *label=guiFactory->labelFactoryMethod();
   label->foo();
   return 0;
 }

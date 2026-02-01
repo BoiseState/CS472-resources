@@ -9,16 +9,16 @@ template <class Item>
 class BoxMagic : public Box<Item> {
 public:
 
-  void put(Item* item) {
+  void put(Item *item) {
     this->item=item;
   }
 
-  Item* get() {
+  Item *get() {
     return item;
   }
 
 private:
-  Item* item;
+  Item *item;
 };
 
 #endif

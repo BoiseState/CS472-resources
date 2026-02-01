@@ -18,10 +18,10 @@ public:
 };
 
 int main() {
-  Penguin* p=new Penguin();
+  Penguin *p=new Penguin();
   p->hop();
   // p->fly();
-  // Bird* b=new Penguin();
+  // Bird *b=new Penguin();
   // b->hop();
   // b->fly(); // huh?
 }

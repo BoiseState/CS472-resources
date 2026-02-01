@@ -9,12 +9,12 @@ using namespace std;
 #include "csv.h"
 #include "err.h"
 
-FILE* Log::f=0;
+FILE *Log::f=0;
 
 ////////////////////////////////////////////////////////////////////////////
 /// This method opens the log file.
 ////////////////////////////////////////////////////////////////////////////
-void Log::open(int log, char* logfile) {
+void Log::open(int log, char *logfile) {
   if (!f && log) {
     if (!(f=fopen(logfile,"a")))
       ERR("Log::open(): fopen() failed: %s",strerror(errno));
@@ -26,10 +26,10 @@ void Log::open(int log, char* logfile) {
 ////////////////////////////////////////////////////////////////////////////
 /// This method writes a CSV entry to the log file.
 ////////////////////////////////////////////////////////////////////////////
-void Log::log(char* msg[]) {
+void Log::log(char *msg[]) {
   if (f) {
     CSV csv(msg);
-    char* s=csv.line();
+    char *s=csv.line();
     fputs(s,f);
     free(s);
   }

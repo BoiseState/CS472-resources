@@ -12,10 +12,10 @@ using namespace std;
 template <class Key, class Data>
 class HashTable : public Table<Key,Data> {
 public:
-  Data& get(Key& key) {
+  Data &get(Key &key) {
     return tab[key];
   }
-  void put(Key& key, Data& data) {
+  void put(Key &key, Data &data) {
     tab[key]=data;
   }
 private:

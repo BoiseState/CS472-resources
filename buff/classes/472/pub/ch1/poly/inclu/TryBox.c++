@@ -8,7 +8,7 @@ using namespace std;
 #include "BoxPlain.h"
 
 int main() {
-  Box<string>* b;               // program to an interface!
+  Box<string> *b;               // program to an interface!
   string s="stuff";
   
   b=new BoxMagic<string>();
@@ -19,7 +19,7 @@ int main() {
   b=new BoxPlain<string>();
   b->put(&s);
   cout << *(b->get()) << endl;
-  string* t=b->get();
+  string *t=b->get();
   cout << (t ? *t : "null") << endl;
 
   return 0;

@@ -21,9 +21,9 @@ public:
 class SubFoo : Foo {
 public:
   SubFoo();
-  SubFoo(SubFoo const& sf);
+  SubFoo(SubFoo const &sf);
   ~SubFoo();
-  SubFoo& operator=(SubFoo const& sf);
+  SubFoo &operator=(SubFoo const &sf);
   void toString();
 private:
   int id;
@@ -38,7 +38,7 @@ SubFoo::SubFoo() {
   id=++cnt;
 }
 
-SubFoo::SubFoo(SubFoo const& sf) {
+SubFoo::SubFoo(SubFoo const &sf) {
   cout << "SubFoo copy constructor" << endl;
   id=++cnt;
 }
@@ -50,7 +50,7 @@ void SubFoo::toString() { cout << "foo: " << id << endl;}
 // allows chaining of assignments.
 // 5) Assignment operators should make sure that self assignment does
 // nothing.
-SubFoo& SubFoo::operator=(SubFoo const& sf) {
+SubFoo &SubFoo::operator=(SubFoo const &sf) {
   cout << "SubFoo assignment operator" << endl;
   this->id=sf.id;
   return *this;
