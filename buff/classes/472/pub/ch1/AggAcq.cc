@@ -5,20 +5,20 @@
 using namespace std;
 
 class C {
-private: int _a[1000];
+private: int a[1000];
 };
 
 class C1 {
-private: C _o;  // aggregation
+private: C o;  // aggregation
 };
 
 class C2 {
-private: C *_o; // acquaintance
+private: C *o; // acquaintance
 };
 
 class C3 {
-private: C &_o;              // acquaintance
-public:  C3(C &o) : _o(o){}; // emoticon?
+private: C &o;              // acquaintance
+public:  C3(C &o) : o(o){};
 };
 
 int main() {
