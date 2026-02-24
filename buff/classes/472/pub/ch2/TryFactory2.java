@@ -25,7 +25,7 @@ public class TryFactory2 {
 
   public static void main(String[] args) {
 	  Creator<ConcreteProduct> creator=
-	    new Creator<ConcreteProduct>(ConcreteProduct.class);
+	    new Creator<>(ConcreteProduct.class);
 	  // ...
   	Product product=creator.create();
 	  System.out.println(product);

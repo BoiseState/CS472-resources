@@ -24,7 +24,7 @@ public:
 
 int main() {
   GUIFactory *guiFactory=new StandardGUIFactory<RedLabel>();
-  Label *label=guiFactory->labelFactoryMethod();
+  auto label=guiFactory->labelFactoryMethod();
   label->foo();
   return 0;
 }
