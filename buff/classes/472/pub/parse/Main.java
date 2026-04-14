@@ -19,7 +19,8 @@ public class Main {
     initArgs(argv);
     Args args=Args.instance();
 
-    Lexer lexer=new Lexer(args.get("--grammar").fileRead(),
+    Lexer lexer=new Lexer(
+      args.get("--grammar").fileRead(),
       args.get("--singles").string(),
       false);
     Node root=new NodeRoot(lexer);

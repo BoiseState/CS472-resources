@@ -1,3 +1,5 @@
+// Command(233): ConcreteCommand
+
 public class ArgBool extends Arg {
 
     public void init(Args args) {
