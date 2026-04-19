@@ -1,0 +1,30 @@
+Glyph, CompositeGlyph:
+    remove: public Glyph child(int position) throws GlyphException;
+
+Glyph:
+  ... implements GlyphFinder,Iteratee<Glyph> {
+
+  public Iterator<Glyph> createIterator() {
+    return new NullIterator<Glyph>();
+  }
+
+  public abstract void accept(GlyphVisitor v);
+
+CompositeGlyph:
+  public Iterator<Glyph> createIterator() {
+    return new VectorIterator<Glyph>(_children);
+  }
+
+CompositeGlyph.draw, SimpleCompositor.compose:
+    for (Iterator<Glyph> i=createIterator(); !i.done(); i.next())
+      ... i.item().item() ...;
+
+Character, Column, Rectangle, Row:
+    public void accept(GlyphVisitor v) { v.visit(this); }
+
+Lexi.initKeyMap:
+    km.put('w',new PrintWordsCommand(glyph));
+
+Character:
+    public char getChar() { return _c; }
+

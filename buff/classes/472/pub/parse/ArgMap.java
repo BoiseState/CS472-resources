@@ -4,7 +4,7 @@ public class ArgMap implements Iterable<Arg> {
 
     private Map<String,Arg> m;
 
-    public ArgMap() { m=new Hashtable<String,Arg>(); }
+    public ArgMap() { m=new Hashtable<>(); }
 
     public void put(String s, Arg a) { m.put(s,a); }
     public Arg get(String s) { return m.get(s); }
