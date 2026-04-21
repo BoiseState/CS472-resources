@@ -8,5 +8,5 @@ while read page name ; do
 	-e "s/@N@/$name/g" \
 	-e "s/@F@/$file/g" \
 	< 0TMPL.tex > $tex
-    pdflatex $tex
+    /bin/pdflatex $tex
 done < 0Patterns.txt

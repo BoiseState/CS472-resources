@@ -4,7 +4,7 @@ public class Grammar implements Iterable<Rule> {
 
   private Vector<Rule> _grammar;
 
-  public Grammar() { _grammar=new Vector<Rule>(); }
+  public Grammar() { _grammar=new Vector<>(); }
 
   public Grammar(Node root) {
     this();

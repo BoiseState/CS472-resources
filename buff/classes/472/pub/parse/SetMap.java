@@ -11,7 +11,7 @@ public class SetMap<Key  extends Comparable<Key>,
   public SetMap(String name, Data proto) {
     _name=name;
     _proto=proto;
-    _map=new TreeMap<Key,Data>();
+    _map=new TreeMap<>();
   }
 
   public Data get(Key key) {
